@@ -1,0 +1,63 @@
+/* Input */
+.formInput{
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+    width: 40%;
+    justify-content: space-between;
+}
+.form-label{
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-right: 10px;
+}
+
+.input-group{
+    position: relative;
+    margin: auto 0;
+    
+}
+.form__input{
+    background-color: rgba(203, 201, 201,.9);
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    outline: none;
+}
+.invalid-feedback,.select-input-invalid-feedback{
+    position: absolute;
+    color:red;
+    font-size: 12px;
+}
+
+/* Select */
+.dropdown{
+    background-color: rgba(203, 201, 201,.9);
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    outline: none;
+}
+
+.filterText{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    z-index: 10000;
+}
+
+.dropdown-menu{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+select{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    right: 5px;
+}
