@@ -6,6 +6,7 @@ import AboutImage from "../../assets/images/aboutimg.jfif"
 import ScrollReveal from 'scrollreveal'
 import LoginModal from './loginModal';
 import RegisterModal from './registerModal';
+import ResetPasswordModal from './resetPasswordModal';
 function Index() {
     const [onToggle, setonToggle] = useState(true);
 

@@ -14,16 +14,18 @@ function FormInput({
 
   return (
     <div className='formInput'>
-        {label && (
+        {/* {label && (
             <label htmlFor={`${name}-input`} className="form-label fw-bold">
                 {label + ":"}
             </label>
-        )}
-
+        )} */}
+         <div htmlFor={`${name}-input`} className="form-label fw-bold">
+                {label}
+        </div>
         <div className='input-group has-validation'>
             <input
                 {...field}
-                {...{name,placeholder}}
+              
                 type={type}
                 id={`${name}-input`}
                 className={`form-control form__input ${className} ${

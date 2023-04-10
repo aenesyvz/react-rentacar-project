@@ -9,8 +9,9 @@ import TransmissionService from "../../../services/transmissionService"
 import CarService from "../../../services/carService"
 import FormInput from "../../../components/formElements/formInput"
 import FormSelect from "../../../components/formElements/formSelect"
+import Modal from '../../../components/modal/modal'
 
-function AddedCar() {
+function AddedCar({open,onClose}) {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [colors, setColors] = useState([]);
@@ -86,16 +87,8 @@ function AddedCar() {
   }
 
   return (
-    <div>
-      <div className='section container'>
-        <div className='container grid'>
-          <div className="content-header">
-            <i className='bx bx-menu header-icon' ></i>
-            <span className="header-title">Add Brand</span>
-          </div>
-
-
-          <div>
+          <Modal open={open} onClose={onClose}>
+            <h2 className="modal-title">Marka Ekle</h2>
             <Formik
               initialValues={initialValues}
               validationSchema={schema}
@@ -104,6 +97,7 @@ function AddedCar() {
               <Form>
                 <FormInput name="name" type="text"></FormInput>
                 <FormSelect
+                  label="Marka"
                   name="brandId"
                   options={brands.map((x) => ({
                     value: x.id,
@@ -111,6 +105,7 @@ function AddedCar() {
                   }))}
                 ></FormSelect>
                 <FormSelect
+                label="Model"
                   name="modelId"
                   options={models.map((x) => ({
                     value: x.id,
@@ -118,6 +113,7 @@ function AddedCar() {
                   }))}
                 ></FormSelect>
                 <FormSelect
+                label="Renk"
                   name="colorId"
                   options={colors.map((x) => ({
                     value: x.id,
@@ -125,6 +121,7 @@ function AddedCar() {
                   }))}
                 ></FormSelect>
                 <FormSelect
+                  label="Yakıt"
                   name="fuelId"
                   options={fuels.map((x) => ({
                     value: x.id,
@@ -132,27 +129,24 @@ function AddedCar() {
                   }))}
                 ></FormSelect>
                 <FormSelect
+                  label="Vites"
                   name="transmissionId"
                   options={transmissions.map((x) => ({
                     value: x.id,
                     label: x.name
                   }))}
                 ></FormSelect>
-                <FormInput name="modelYear" type="text"></FormInput>
-                <FormInput name="kilometer" type="text"></FormInput>
-                <FormInput name="carStateId" type="text"></FormInput>
-                <FormInput name="plate" type="text"></FormInput>
-                <FormInput name="motorPower" type="text"></FormInput>
-                <FormInput name="torque" type="text"></FormInput>
-                <FormInput name="minFindeksCreditRate" type="text"></FormInput>
+                <FormInput label="Model Yılı" name="modelYear" type="text"></FormInput>
+                <FormInput label="KM" name="kilometer" type="text"></FormInput>
+                <FormInput label="Araç Durumu" name="carStateId" type="text"></FormInput>
+                <FormInput label="Plaka" name="plate" type="text"></FormInput>
+                <FormInput label="Motor Gücü" name="motorPower" type="text"></FormInput>
+                <FormInput label="Tork" name="torque" type="text"></FormInput>
+                <FormInput label="Minimum Findeks Oranı"  name="minFindeksCreditRate" type="text"></FormInput>
                 <button className="add" type="submit">Ekle</button>
               </Form>
             </Formik>
-          </div>
-
-        </div>
-      </div>
-    </div>
+            </Modal>
 
   )
 }

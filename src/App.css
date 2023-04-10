@@ -176,3 +176,19 @@ img{
   
   }
   
+
+
+
+
+  /* /Table */
+
+  .content-table thead tr {
+    background-color: var(--first-color);
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid var(--first-color);
+  }

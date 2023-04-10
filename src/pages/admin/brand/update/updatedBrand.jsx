@@ -1,16 +1,13 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 import * as Yup from "yup"
 import { Form, Formik } from "formik"
 import BrandService from "../../../../services/brandService.js"
 import FormInput from "../../../../components/formElements/formInput"
-function UpdatedBrand() {
-    const navigate = useNavigate();
-    const location = useLocation();
 
+function UpdatedBrand({open,onClose,item}) {
     const initialValues = {
-        id: location.state.brand.id,
-        name: location.state.brand.name
+        id: item.brand.id,
+        name: item.brand.name
     }
 
     const schema = Yup.object().shape({
@@ -21,21 +18,13 @@ function UpdatedBrand() {
         const result = await new BrandService().update({
             ...values
         });
-        navigate(-1);
     }
 
     return (
         <>
-            <div className='section container'>
-                <div className='container grid'>
-                    <div className="content-header container">
-                        <i className='bx bx-menu header-icon' ></i>
-                        <span className="header-title">Update Brand</span>
-                    </div>
-
-
-                    <div>
-
+          
+          <Modal open={open} onClose={onClose}>
+                     <h2 className="modal-title">Renk Güncelle</h2>
                         <Formik
                             initialValues={initialValues}
                             validationSchema={schema}
@@ -48,10 +37,7 @@ function UpdatedBrand() {
 
 
                         </Formik>
-                    </div>
-
-                </div>
-            </div>
+               </Modal>
         </>
     )
 }

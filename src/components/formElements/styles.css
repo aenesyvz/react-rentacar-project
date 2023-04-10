@@ -3,28 +3,39 @@
     display: flex;
     margin-bottom: 30px;
     align-items: center;
-    width: 40%;
     justify-content: space-between;
+    position: relative;
+ 
 }
 .form-label{
+    padding: 0 1rem;
+    background-color: white;
     font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
-    margin-right: 10px;
+    position: absolute;
+    z-index: 100;
+    left: 1rem;
+    top: -.5rem;
+    text-align: left;
 }
 
 .input-group{
     position: relative;
     margin: auto 0;
-    
 }
 .form__input{
-    background-color: rgba(203, 201, 201,.9);
+    width: 300px;
+    /* background-color: rgba(203, 201, 201,.9); */
     border: none;
     padding: .5rem 1rem;
     border-radius: 1rem;
     outline: none;
+    border:1px solid seagreen;
+    border-radius: 1rem;
 }
+
+
 .invalid-feedback,.select-input-invalid-feedback{
     position: absolute;
     color:red;
@@ -32,12 +43,18 @@
 }
 
 /* Select */
-.dropdown{
+/* .dropdown{
     background-color: rgba(203, 201, 201,.9);
     border: none;
     padding: .5rem 1rem;
     border-radius: 1rem;
     outline: none;
+} */
+
+.datalist{
+    background-color: aqua;
+    height: 100px;
+    width: 300px;
 }
 
 .filterText{

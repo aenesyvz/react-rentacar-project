@@ -5,8 +5,10 @@ import BrandService from "../../../../services/brandService.js"
 import FormInput from "../../../../components/formElements/formInput"
 import "../styles.css"
 import { useNavigate } from 'react-router-dom'
-function AddedBrand() {
-    const navigate = useNavigate();
+import Modal from '../../../../components/modal/modal.jsx'
+
+function AddedBrand({ open, onClose }) {
+   
     const initialValues = {
         name: ""
     }
@@ -19,36 +21,28 @@ function AddedBrand() {
         const result = await new BrandService().add({
             ...values
         });
-        navigate(-1);
+      
+        onClose();
+        
     }
 
     return (
        <>
-         <div className='section container'>
-        <div className='container grid'>
-            <div className="content-header container">
-                    <i className='bx bx-menu header-icon' ></i>
-                    <span className="header-title">Add Brand</span>
-            </div>
-         
-
-                <div>
-
+                <Modal open={open} onClose={onClose}>
+                     <h2 className="modal-title">Add Brand</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={schema}
                         onSubmit={(values) => add(values)}
                     >
                         <Form>
-                            <FormInput type="text" name='name' />
-                            <button className='add' type='submit'>Ekle</button>
+                            <FormInput label="Ad" type="text" name='name' />
+                            <div className="button-login">
+                              <button className="login" type="submit">Ekle</button>
+                            </div>
                         </Form>
-
-
                     </Formik>
-                </div>
-    </div>
-    </div>
+                    </Modal>
         </>
     )
 }

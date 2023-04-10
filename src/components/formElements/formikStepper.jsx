@@ -29,6 +29,10 @@ export  function FormikStepper({ children, ...props }) {
           await props.onSubmit(values, helpers);
           setCompleted(true);
         } else {
+          //if(currentChild.props.check){
+           // console.log("Fonksiyon burada");
+            //currentChild.props.check()
+          //}
           setStep((s) => s + 1);
           helpers.setTouched({});
         }

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ColorService from '../../../../services/colorService';
 import BrandService from '../../../../services/brandService';
+import AddedColor from '../add/addedColor';
 function GetAllColor() {
   const [colors, setColors] = useState([]);
-
+  const [openAddModal, setopenAddModal] = useState(false);
   const getAll = async() => {
     const result = await new ColorService().getAll();
     setColors(result.data);
@@ -61,9 +62,14 @@ function GetAllColor() {
             </tbody>
           </table>
 
-          <button className='add' onClick={() => redirectToAdd()}>Ekle</button>
+          <button className='add' onClick={() => setopenAddModal(true)}>Ekle</button>
         </div>
       </div>
+
+      <AddedColor 
+        open={openAddModal}
+        onClose={() => setopenAddModal(false)}>  
+      </AddedColor>
     </>
   )
 }

@@ -23,6 +23,7 @@ function AddedModel() {
 
   const initialValues = {
     name: "",
+    brandId:0
   }
 
   const schema = Yup.object().shape({
@@ -31,10 +32,11 @@ function AddedModel() {
   });
 
   const add = async (values) => {
-    const result = await new ModelService().add({
-      ...values
-    });
-    navigate(-1);
+    // const result = await new ModelService().add({
+    //   ...values
+    // });
+    console.log({...values});
+    // navigate(-1);
   }
 
   return (
@@ -52,8 +54,9 @@ function AddedModel() {
             onSubmit={(values) => add(values)}
           >
             <Form>
-              <FormInput name="name" type="text"></FormInput>
+              <FormInput label="Adı" name="name" type="text"></FormInput>
               <FormSelect
+                label="Marka"
                 name="brandId"
                 options={brands.map((x) => ({
                   value: x.id,

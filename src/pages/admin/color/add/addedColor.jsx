@@ -4,10 +4,9 @@ import { Form, Formik } from "formik"
 import ColorService from "../../../../services/colorService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
-import { useNavigate } from 'react-router-dom'
+import Modal from '../../../../components/modal/modal'
 
-function AddedColor() {
-    const navigate = useNavigate();
+function AddedColor({open,onClose}) {
     const initialValues = {
         name: ""
     }
@@ -20,30 +19,25 @@ function AddedColor() {
         const result = await new ColorService().add({
             ...values
         });
-        navigate(-1);
+        onClose();
     }
 
     return (
         <>
-            <div className='section container'>
-                <div className='container grid'>
-                    <div className="content-header container">
-                        <i className='bx bx-menu header-icon' ></i>
-                        <span className="header-title">Add Color</span>
-                    </div>
+           <Modal open={open} onClose={onClose}>
+                     <h2 className="modal-title">Renk Ekle</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={schema}
                         onSubmit={(values) => add(values)}
                     >
                         <Form>
-                            <FormInput type="text" name="name" />
+                            <FormInput label="Ad" type="text" name="name" />
                             <button className='add' type='submit'>Ekle</button>
                         </Form>
 
                     </Formik>
-                </div>
-            </div>
+               </Modal>
         </>
     )
 }
