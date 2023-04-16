@@ -5,6 +5,7 @@ import ColorService from "../../../../services/colorService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
 import Modal from '../../../../components/modal/modal'
+import { toast } from 'react-toastify'
 
 function AddedColor({open,onClose}) {
     const initialValues = {
@@ -16,10 +17,18 @@ function AddedColor({open,onClose}) {
     });
 
     const add = async (values) => {
-        const result = await new ColorService().add({
+        await new ColorService().add({
             ...values
-        });
-        onClose();
+        }).then((e) => {
+            toast.success(values.name + "renk eklendi!",{
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            onClose();
+        }).catch((error) => {
+            toast.error(error.response.data.message,{
+                position:toast.POSITION.BOTTOM_RIGHT
+            });
+        }) ;
     }
 
     return (

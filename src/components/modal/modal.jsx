@@ -16,7 +16,6 @@ const Modal = ({ children,...props}) => {
                 <div className="line line-2"></div>
             </div>
                 <div className="modalContainer">
-                    <h2 className='e'>E</h2>
                     {children}
                 </div>
             </div>

@@ -12,16 +12,19 @@ export default function FormTextArea({
   const [field, meta] = useField(name);
 
   return (
-    <div className={`mb-3 ${className}`}>
-      <label htmlFor={`${name}-textarea`} className='form-label fw-bold'>
+    <div className="formInput">
+      {/* <label htmlFor={`${name}-textarea`} className='form-label fw-bold'>
         {label}
-      </label>
+      </label> */}
+       <div htmlFor={`${name}-input`} className="form-label fw-bold">
+                {label}
+        </div>
       <div className='input-group has-validation'>
         <textarea
           {...field}
           {...{ name, rows }}
           id={`${name}-textarea`}
-          className={`form-control ${
+          className={`form-control form__input ${
             meta.touched && !!meta.error ? "is-invalid" : ""
           }`}
           aria-describedby={`${name}-textarea`}

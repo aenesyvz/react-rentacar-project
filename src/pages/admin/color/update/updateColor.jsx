@@ -1,16 +1,16 @@
 import React from 'react'
 import * as Yup from "yup"
 import { Form, Formik } from "formik"
-import { useLocation, useNavigate } from 'react-router-dom'
 import ColorService from '../../../../services/colorService';
 import FormInput from '../../../../components/formElements/formInput';
 import "../../../admin/styles.css"
-function UpdateColor() {
-    const navigate = useNavigate();
-    const location = useLocation();
+import Modal from '../../../../components/modal/modal';
+import { toast } from 'react-toastify';
+
+function UpdateColor({open,onClose,item}) {
     const initialValues = {
-        id: location.state.id,
-        name: location.state.name
+        id: item.id,
+        name: item.name
     }
 
     const schema = Yup.object().shape({
@@ -18,33 +18,37 @@ function UpdateColor() {
     });
 
     const update = async (values) => {
-        const result = await new ColorService().update({
+        await new ColorService().update({
             ...values
-        });
-        navigate(-1);
+        }).then((e) => {
+            toast.success(values.name + "renki güncellendi!",{
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            onClose();
+        }).catch((error) => {
+            toast.error(error.response.data.message,{
+                position:toast.POSITION.BOTTOM_RIGHT
+            })
+        })
+  
     }
 
     return (
         <>
-            <div className='section container'>
-                <div className='container grid'>
-                    <div className="content-header container">
-                        <i className='bx bx-menu header-icon' ></i>
-                        <span className="header-title">Update Color</span>
-                    </div>
+             <Modal open={open} onClose={onClose}>
+                     <h2 className="modal-title">Renk Güncelle</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={schema}
                         onSubmit={(values) => update(values)}
                     >
                         <Form>
-                            <FormInput type="text" name="name" />
-                            <button className='update' type='submit'>Update</button>
+                            <FormInput type="text" name="name" label="Ad" />
+                            <button className='update' type='submit'>Güncelle</button>
                         </Form>
 
                     </Formik>
-                </div>
-            </div>
+                </Modal>
         </>
     )
 }

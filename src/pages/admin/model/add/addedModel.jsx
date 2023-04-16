@@ -4,11 +4,12 @@ import { Form, Formik } from "formik"
 import BrandService from "../../../../services/brandService"
 import FormInput from "../../../../components/formElements/formInput"
 import FormSelect from "../../../../components/formElements/formSelect"
-import { useNavigate } from 'react-router-dom'
 import ModelService from '../../../../services/modelService'
+import Modal from '../../../../components/modal/modal'
+import { toast } from 'react-toastify'
 
-function AddedModel() {
-  const navigate = useNavigate();
+function AddedModel([open,onClose]) {
+
   const [brands, setBrands] = useState([]);
 
   const getAllBrands = async () => {
@@ -32,22 +33,24 @@ function AddedModel() {
   });
 
   const add = async (values) => {
-    // const result = await new ModelService().add({
-    //   ...values
-    // });
-    console.log({...values});
-    // navigate(-1);
+    const result = await new ModelService().add({
+      ...values
+    }).then((e) => {
+      toast.success("Marka eklendi",{
+        position:toast.POSITION.BOTTOM_RIGHT
+      })
+    }).catch((error)=> {
+      toast.error(error.response.data.message,{
+        position:toast.POSITION.BOTTOM_RIGHT
+      })
+    });
+  
   }
 
   return (
-    <div>
-      <div className='section container'>
-        <div className='container grid'>
-          <div className="content-header">
-            <i className='bx bx-menu header-icon' ></i>
-            <span className="header-title">Add Model</span>
-          </div>
-
+   
+        <Modal open={open} onClsoe={onClose}>
+          <h2 className='modal-title'>Model Ekle</h2>
           <Formik
             initialValues={initialValues}
             validationSchema={schema}
@@ -66,9 +69,8 @@ function AddedModel() {
               <button className="add" type="submit">Ekle</button>
             </Form>
           </Formik>
-        </div>
-      </div>
-    </div>
+        </Modal>
+     
   )
 }
 

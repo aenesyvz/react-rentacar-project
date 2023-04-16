@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import BrandService from '../../../../services/brandService';
 import "./getListBrand.css"
 import "../styles.css"
 import AddedBrand from '../add/addedBrand';
 import UpdatedBrand from '../update/updatedBrand';
+import { toast } from 'react-toastify';
+import AdminLayout from '../../../../layouts/admin/AdminLayout';
 
 function GetListBrand() {
   const [brands, setBrands] = useState([]);
   const [openAddModal, setopenAddModal] = useState(false);
   const [openUpdateModal, setopenUpdateModal] = useState(false);
-  const [openDeleteModal, setopenDeleteModal] = useState(false);
-  const [selectItem,setSelectItem] = useState(null);
+  const [selectItem, setSelectItem] = useState(null);
 
   const getAll = async () => {
     const result = await new BrandService().getAll();
@@ -23,11 +23,17 @@ function GetListBrand() {
   }, []);
 
   const deleteItem = async (id) => {
-    const result = await new BrandService().delete(id);
+    await new BrandService().delete(id).then((e) => {
+      toast.success("Marka silindi!");
+    }).catch((error) => {
+      toast.error(error.response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      })
+    })
   }
 
 
- 
+
   const redirectToUpdate = (item) => {
     setSelectItem(item);
     setopenUpdateModal(true);
@@ -37,52 +43,50 @@ function GetListBrand() {
   return (
 
     <>
-      <div className='section container'>
-        <div className='container grid'>
-          <div className="content-header container">
-            <i className='bx bx-menu header-icon' ></i>
-            <span className="header-title">Get All Brand</span>
-          </div>
-          <table className="content-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Marka İsmi</th>
-                <th className='edit'>Düzenle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {brands.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>
-                    <div className="edit-btns">
-                      <button className='update' onClick={() => redirectToUpdate(item)}>Güncelle</button>
-
-                      <button className='delete' onClick={() => deleteItem(item.id)}>Sil</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-
-            </tbody>
-          </table>
-
-          <button className='add' onClick={() => setopenAddModal(true)}>Ekle</button>
+      <AdminLayout>
+        <div className="content-header">
+          <i className='bx bx-menu header-icon' ></i>
+          <span className="header-title">Tüm Markalar</span>
         </div>
-      </div>
-  
+        <table className="content-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Marka İsmi</th>
+              <th className='edit'>Düzenle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {brands.map((item) => (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>
+                  <div className="edit-btns">
+                    <button className='update' onClick={() => redirectToUpdate(item)}>Güncelle</button>
+
+                    <button className='delete' onClick={() => deleteItem(item.id)}>Sil</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+
+          </tbody>
+        </table>
+
+        <button className='add' onClick={() => setopenAddModal(true)}>Ekle</button>
+
+      </AdminLayout>
       <AddedBrand
         open={openAddModal}
         onClose={() => setopenAddModal(false)}
       ></AddedBrand>
 
-      <UpdatedBrand
+      {openUpdateModal && <UpdatedBrand
         open={openUpdateModal}
         onClose={() => setopenUpdateModal(false)}
         item={selectItem}
-        ></UpdatedBrand>
+      ></UpdatedBrand>}
     </>
   )
 }

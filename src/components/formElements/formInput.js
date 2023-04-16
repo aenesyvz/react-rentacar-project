@@ -25,12 +25,13 @@ function FormInput({
         <div className='input-group has-validation'>
             <input
                 {...field}
-              
+               
                 type={type}
                 id={`${name}-input`}
                 className={`form-control form__input ${className} ${
                     meta.touched && !!meta.error? "is-invalid" : ""
                 }`}
+                
                 // aria-describedy={`${name}-input`}
             />
             {render}

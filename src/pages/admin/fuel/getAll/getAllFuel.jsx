@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import FuelService from "../../../../services/fuelService"
+import { toast } from 'react-toastify';
+import AddedFuel from '../add/addedFuel';
+import UpdateFuel from '../update/updateFuel';
+import AdminLayout from '../../../../layouts/admin/AdminLayout';
+
 function GetAllFuel() {
   const [fuels, setFuels] = useState([]);
+  const [OpenAddModal, setOpenAddModal] = useState(false);
+  const [OpenUpdateModal, setOpenUpdateModal] = useState(false);
+  const [SelectItem, setSelectItem] = useState(null);
 
   const getAll = async () => {
     const result = await new FuelService().getAll();
@@ -14,32 +21,37 @@ function GetAllFuel() {
     getAll();
   }, []);
 
-  let navigate = useNavigate();
-  const redirectToAdd = () => {
-    navigate("/admin/fuel/add");
-  }
-
-  const redirectToUpdate = (fuel) => {
-    navigate("/admin/fuel/update", { state: { fuel } });
-  }
+  
 
   const deleteItem = async (id) => {
-    const result = await new FuelService().delete(id);
+    await new FuelService().delete(id).then((e)=>{
+      toast.success("Yakıt siindi",{
+        position:toast.POSITION.BOTTOM_RIGHT
+      });
+    }).catch((error)=>{
+      toast.error(error.response.data.message,{
+        position:toast.POSITION.BOTTOM_RIGHT
+      });
+    });
+  }
+
+  const redirectToUpdate = async(item) => {
+    setSelectItem(item);
+    setOpenUpdateModal(true);
   }
 
   return (
     <>
-      <div className='section container'>
-        <div className='container grid'>
-          <div className="content-header container">
+     <AdminLayout>
+          <div className="content-header ">
             <i className='bx bx-menu header-icon' ></i>
-            <span className="header-title">Get All Fuel</span>
+            <span className="header-title">Tüm Yakıtlar</span>
           </div>
           <table className="content-table">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th>Adı</th>
                 <th className='edit'>Düzenle</th>
               </tr>
             </thead>
@@ -60,9 +72,21 @@ function GetAllFuel() {
             </tbody>
           </table>
 
-          <button className='add' onClick={() => redirectToAdd()}>Ekle</button>
-        </div>
-      </div>
+          <button className='add' onClick={() => setOpenAddModal(true)}>Ekle</button>
+          </AdminLayout>
+
+      <AddedFuel
+        open={OpenAddModal}
+        onClose={() => setOpenAddModal(false)}
+        >
+      </AddedFuel>
+
+      {OpenUpdateModal && <UpdateFuel
+        open={OpenUpdateModal}
+        onClose={() => setOpenUpdateModal(false)}
+        item={SelectItem}
+      >
+      </UpdateFuel>}
     </>
   )
 }

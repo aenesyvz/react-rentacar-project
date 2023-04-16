@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import "./styles.css"
 function Sidebar() {
@@ -6,32 +6,16 @@ function Sidebar() {
     const menuRef = useRef(null);
     
 
-  useEffect(() => {
-    const handleClick = event => {
-        elementSidebar.classList.toggle("close");
-        console.log("jkadd");
-    };
-
-    const elementSidebar = ref.current;
-    const elementMenu = menuRef.current;
-
-    elementMenu.addEventListener('click', handleClick);
-    
-
-    return () => {
-        elementMenu.removeEventListener('click', handleClick);
-    };
-  }, []);
 
     return (
   
         
         <div>
-                <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'></link>
+            <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'></link>
             <div className="sidebar"  ref={ref}>
                 <div className="logo-details">
                     <i className='bx bxl-c-plus-plus bx-menu' ref={menuRef}></i>
-                    <span className="logo_name">CodingLab</span>
+                    <span className="logo_name">RentACar</span>
                 </div>
                 <ul className="nav-links">
                     <li>
@@ -40,22 +24,22 @@ function Sidebar() {
                             <span className="link_name">Dashboard</span>
                         </a>
                         <ul className="sub-menu blank">
-                            <li><a className="link_name" href="#">Category</a></li>
+                            <li><a className="link_name" href="#"></a></li>
                         </ul>
                     </li>
                     <li>
                         <div className="iocn-link">
                             <a href="#">
                                 <i className='bx bx-collection' ></i>
-                                <span className="link_name">Category</span>
+                                <span className="link_name">Kullanıcılar</span>
                             </a>
                             <i className='bx bxs-chevron-down arrow' ></i>
                         </div>
                         <ul className="sub-menu">
                             <li><a className="link_name" href="#">Category</a></li>
-                            <li><a href="#">HTML & CSS</a></li>
-                            <li><a href="#">JavaScript</a></li>
-                            <li><a href="#">PHP & MySQL</a></li>
+                            <li><a href="#">Bireysel Müşteriler</a></li>
+                            <li><a href="#">Kurumsal Müşteriler</a></li>
+                            <li><a href="#">Personeller</a></li>
                         </ul>
                     </li>
                     <li>

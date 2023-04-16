@@ -1,47 +1,54 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import ColorService from '../../../../services/colorService';
-import BrandService from '../../../../services/brandService';
 import AddedColor from '../add/addedColor';
+import UpdateColor from '../update/updateColor';
+import AdminLayout from '../../../../layouts/admin/AdminLayout';
+import { toast } from 'react-toastify';
 function GetAllColor() {
   const [colors, setColors] = useState([]);
   const [openAddModal, setopenAddModal] = useState(false);
+  const [openUpdateModal, setopenUpdateModal] = useState(false);
+  const [selectItem, setselectItem] = useState(null);
+
   const getAll = async() => {
     const result = await new ColorService().getAll();
     setColors(result.data);
-    console.log(colors);
   }
   
   useEffect(() => {
     getAll();
    }, []);
 
-  let navigate = useNavigate();
-  const redirectToAdd = () => {
-    navigate("/admin/color/add");
-  }
 
-  const redirectToUpdate = (item) => {
-    navigate("/admin/color/update", { state: { item } });
-  }
-
+ 
   const deleteItem = async (id) => {
-    const result = await new ColorService().delete(id);
+    await new ColorService().delete(id).then((e) => {
+      toast.success("Renk silindi!",{
+        position:toast.POSITION.BOTTOM_RIGHT
+      })
+    }).catch((error)=> {
+      toast.error(error.response.data.message,{
+        position:toast.POSITION.BOTTOM_RIGHT
+      })
+    });
   }
 
+  const redirectToUpdate = async(item) => {
+    setselectItem(item);
+    setopenUpdateModal(true)
+  }
   return (
     <>
-      <div className='section container'>
-        <div className='container grid'>
+      <AdminLayout>
           <div className="content-header container">
             <i className='bx bx-menu header-icon' ></i>
-            <span className="header-title">Get All Color</span>
+            <span className="header-title">Tüm Renkler</span>
           </div>
           <table className="content-table">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Name</th>
+                <th>Ad</th>
                 <th className='edit'>Düzenle</th>
               </tr>
             </thead>
@@ -63,13 +70,19 @@ function GetAllColor() {
           </table>
 
           <button className='add' onClick={() => setopenAddModal(true)}>Ekle</button>
-        </div>
-      </div>
+          </AdminLayout>
 
       <AddedColor 
         open={openAddModal}
         onClose={() => setopenAddModal(false)}>  
       </AddedColor>
+
+      {openUpdateModal && <UpdateColor
+        open={openUpdateModal}
+        onClose={() => setopenUpdateModal(false)}
+        item={selectItem}
+        >
+      </UpdateColor>}
     </>
   )
 }

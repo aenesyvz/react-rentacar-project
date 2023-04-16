@@ -4,9 +4,10 @@ import { Form, Formik } from "formik"
 import FuelService from "../../../../services/fuelService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
-import { useNavigate } from 'react-router-dom'
-function AddedFuel() {
-    const navigate = useNavigate();
+import { toast } from 'react-toastify'
+import Modal from '../../../../components/modal/modal'
+
+function AddedFuel({open,onClose}) {
     const initialValues = {
         name: ""
     }
@@ -16,32 +17,36 @@ function AddedFuel() {
     });
 
     const add = async (values) => {
-        const result = await new FuelService().add({
+        await new FuelService().add({
             ...values
+        }).then((e) => {
+            toast.success(values.name + " yakıtı eklendi!",{
+                position:toast.POSITION.BOTTOM_RIGHT
+            });
+            onClose();
+        }).catch((error) =>{
+            toast.error(error.response.data.message,{
+                position:toast.POSITION.BOTTOM_RIGHT
+            })
         });
-        navigate(-1);
+
     }
 
     return (
         <>
-            <div className='section container'>
-                <div className='container grid'>
-                    <div className="content-header container">
-                        <i className='bx bx-menu header-icon' ></i>
-                        <span className="header-title">Add Fuel</span>
-                    </div>
+              <Modal open={open} onClose={onClose}>
+                     <h2 className="modal-title">Yakıt Ekle</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={schema}
                         onSubmit={(values) => add(values)}
                     >
                         <Form>
-                            <FormInput type="text" name='name' />
+                            <FormInput type="text" name='name' label="Ad" />
                             <button  className='add' type='submit'>Ekle</button>
                         </Form>
                     </Formik>
-                </div>
-            </div>
+              </Modal>
         </>
     )
 }

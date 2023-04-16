@@ -1,0 +1,23 @@
+.drap__drop__container{
+    margin: 1rem 0;
+}
+.drag__img{
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+}
+.drag__content{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.select-file-btn{
+    background-color: hsl(190, 64%, 22%);
+    margin-top: 1rem;
+    color: white;
+    border-radius: 1rem;
+    padding: .5rem .75rem;
+}

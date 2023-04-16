@@ -6,6 +6,7 @@ import FormInput from "../../../../components/formElements/formInput"
 import "../styles.css"
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../../../components/modal/modal.jsx'
+import { toast } from 'react-toastify'
 
 function AddedBrand({ open, onClose }) {
    
@@ -18,18 +19,24 @@ function AddedBrand({ open, onClose }) {
     });
 
     const add = async (values) => {
-        const result = await new BrandService().add({
+        await new BrandService().add({
             ...values
+        }).then((e) => {
+            toast.success(values.name + 'markası kaydedildi  !', {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            onClose();
+        }).catch((error) => {
+            toast.error(error.response.data.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
         });
-      
-        onClose();
-        
     }
 
     return (
        <>
                 <Modal open={open} onClose={onClose}>
-                     <h2 className="modal-title">Add Brand</h2>
+                     <h2 className="modal-title">Marka Ekle</h2>
                     <Formik
                         initialValues={initialValues}
                         validationSchema={schema}

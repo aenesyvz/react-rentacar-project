@@ -4,44 +4,40 @@ import { Form, Formik } from "formik"
 import TransmissionService from "../../../../services/transmissionService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
-import { useNavigate } from 'react-router-dom'
-function AddedTransmission() {
-    const navigate = useNavigate();
+import Modal from '../../../../components/modal/modal'
+
+function AddedTransmission({ open, onClose }) {
+
     const initialValues = {
         name: ""
     }
 
     const schema = Yup.object().shape({
-        name: Yup.string().required("Vites ismi boş geçilemez").min(3,"Vites ismi en az üç karakterden oluşmalıdır")
+        name: Yup.string().required("Vites ismi boş geçilemez").min(3, "Vites ismi en az üç karakterden oluşmalıdır")
     });
 
     const add = async (values) => {
-        const result = await new TransmissionService().add({
+        await new TransmissionService().add({
             ...values
         });
-        navigate(-1);
+
     }
 
     return (
         <>
-         <div className='section container'>
-                <div className='container grid'>
-             <div className="content-header container">
-                <i className='bx bx-menu header-icon' ></i>
-                <span className="header-title">Add Transmission</span>
-            </div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={schema}
-                onSubmit={(values) => add(values)}
-            >
-                <Form>
-                    <FormInput type="text" name='name' />
-                    <button className='add' type='submit'>Ekle</button>
-                </Form>
-            </Formik>
-            </div>
-            </div>
+            <Modal open={open} onClose={onClose}>
+                <h2 className='modal-title'>Vites Ekle</h2>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={schema}
+                    onSubmit={(values) => add(values)}
+                >
+                    <Form>
+                        <FormInput type="text" name='name' label="Ad"/>
+                        <button className='add' type='submit'>Ekle</button>
+                    </Form>
+                </Formik>
+            </Modal>
         </>
     )
 }
