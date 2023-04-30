@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import FuelService from "../../../../services/fuelService"
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import AddedFuel from '../add/addedFuel';
 import UpdateFuel from '../update/updateFuel';
 import AdminLayout from '../../../../layouts/admin/AdminLayout';
@@ -14,7 +14,7 @@ function GetAllFuel() {
   const getAll = async () => {
     const result = await new FuelService().getAll();
     setFuels(result.data);
-    console.log(result.data);
+  
   }
 
   useEffect(() => {
@@ -78,6 +78,7 @@ function GetAllFuel() {
       <AddedFuel
         open={OpenAddModal}
         onClose={() => setOpenAddModal(false)}
+        getAll={()=>getAll()}
         >
       </AddedFuel>
 
@@ -85,8 +86,11 @@ function GetAllFuel() {
         open={OpenUpdateModal}
         onClose={() => setOpenUpdateModal(false)}
         item={SelectItem}
+        getAll={()=>getAll()}
       >
       </UpdateFuel>}
+
+      <ToastContainer></ToastContainer>
     </>
   )
 }

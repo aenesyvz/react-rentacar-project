@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ModelService from '../../../../services/modelService';
 import AdminLayout from '../../../../layouts/admin/AdminLayout';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import AddedModel from '../add/addedModel';
 import UpdateModel from '../update/updateModel';
 
@@ -83,13 +83,16 @@ function GetListModel() {
                 <AddedModel
                     open={OpenAddModal}
                     onClose={()=>setOpenAddModal(false)}
+                    getAll={()=>getAll()}
                 ></AddedModel>
 
                 {OpenUpdateModal && <UpdateModel
                     open={OpenUpdateModal}
                     onClose={()=>setOpenUpdateModal(false)}
                     item={SelectItem}
+                    getAll={()=>getAll()}
                 ></UpdateModel>}
+                <ToastContainer></ToastContainer>
             </AdminLayout>
         </>
     )

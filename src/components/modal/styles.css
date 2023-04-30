@@ -83,6 +83,33 @@
     animation-duration: 1s;
   
   }
+
+  .assetModalContainer{
+  
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    background-color: transparent;
+  
+    border-radius: 1rem;
+  
+  }
+
+  .assetModalContainer img{
+     width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
   .steps{
   
     /* margin-left:-800px; */

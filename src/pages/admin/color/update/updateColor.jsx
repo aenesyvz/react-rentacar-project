@@ -5,9 +5,9 @@ import ColorService from '../../../../services/colorService';
 import FormInput from '../../../../components/formElements/formInput';
 import "../../../admin/styles.css"
 import Modal from '../../../../components/modal/modal';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
-function UpdateColor({open,onClose,item}) {
+function UpdateColor({open,onClose,item,getAll}) {
     const initialValues = {
         id: item.id,
         name: item.name
@@ -24,6 +24,7 @@ function UpdateColor({open,onClose,item}) {
             toast.success(values.name + "renki güncellendi!",{
                 position: toast.POSITION.BOTTOM_RIGHT
             });
+            getAll();
             onClose();
         }).catch((error) => {
             toast.error(error.response.data.message,{
@@ -44,11 +45,14 @@ function UpdateColor({open,onClose,item}) {
                     >
                         <Form>
                             <FormInput type="text" name="name" label="Ad" />
-                            <button className='update' type='submit'>Güncelle</button>
+                            <div className="button-login">
+                              <button className="login" type="submit">Güncelle</button>
+                            </div>
                         </Form>
 
                     </Formik>
                 </Modal>
+                <ToastContainer></ToastContainer>
         </>
     )
 }

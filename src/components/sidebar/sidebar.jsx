@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 
 import "./styles.css"
-function Sidebar() {
+function Sidebar({user}) {
     const ref = useRef(null);
     const menuRef = useRef(null);
     
@@ -123,7 +123,7 @@ function Sidebar() {
                                 {/* <img src="image/profile.jpg" alt="profileImg"> */}
                             </div>
                             <div className="name-job">
-                                <div className="profile_name">Prem Shahi</div>
+                                <div className="profile_name">{user}</div>
                                 <div className="job">Web Desginer</div>
                             </div>
                             <i className='bx bx-log-out' ></i>

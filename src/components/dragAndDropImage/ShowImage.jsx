@@ -2,6 +2,7 @@ import Image from "./Image";
 import "./styles.css"
 const ShowImage = ({ images }) => {
 	const show = (image) => {
+		console.log("SRC: " +JSON.stringify(image));
 		return <Image image={image} />;
 	};
 

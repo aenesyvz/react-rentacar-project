@@ -7,9 +7,9 @@ import FormSelect from '../../../../components/formElements/formSelect';
 import BrandService from '../../../../services/brandService';
 import Modal from '../../../../components/modal/modal';
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
-function UpdateModel({ open, onClose, item }) {
+function UpdateModel({ open, onClose, item, getAll }) {
 
   const [brands, setbrands] = useState([]);
 
@@ -21,13 +21,13 @@ function UpdateModel({ open, onClose, item }) {
   useEffect(() => {
     getAllBrand();
   }, []);
-  
+
   const initialValues = {
     id: item.id,
     name: item.name,
     brandId: item.brandId
   }
-  
+
   const schema = Yup.object().shape({
     name: Yup.string().required("İsim alanı boş geçilemez").min(3).required("İsim en az üç karakterli olmalıdır")
   });
@@ -35,15 +35,17 @@ function UpdateModel({ open, onClose, item }) {
 
 
   const update = async (values) => {
-    await new  ModelService.update({
+    await new ModelService.update({
       ...values
     }).then((e) => {
-      toast.success("Marka güncellendi",{
-        position:toast.POSITION.BOTTOM_RIGHT
+      toast.success("Marka güncellendi", {
+        position: toast.POSITION.BOTTOM_RIGHT
       })
-    }).catch((error)=> {
-      toast.error(error.response.data.message,{
-        position:toast.POSITION.BOTTOM_RIGHT
+      getAll();
+      onClose();
+    }).catch((error) => {
+      toast.error(error.response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT
       })
     });
   }
@@ -52,25 +54,28 @@ function UpdateModel({ open, onClose, item }) {
     <>
       <Modal open={open} onClose={onClose}>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        onSubmit={(values) => update(values)}
-      >
-        <Form>
-          <FormInput name="name" type="text"></FormInput>
-          <FormSelect
-            name="brandId"
+        <Formik
+          initialValues={initialValues}
+          validationSchema={schema}
+          onSubmit={(values) => update(values)}
+        >
+          <Form>
+            <FormInput name="name" type="text"></FormInput>
+            <FormSelect
+              name="brandId"
 
-            options={brands.map((x) => ({
-              value: x.id,
-              label: x.name
-            }))}
-          ></FormSelect>
-          <button className="add" type="submit">Güncelle</button>
-        </Form>
-      </Formik>
+              options={brands.map((x) => ({
+                value: x.id,
+                label: x.name
+              }))}
+            ></FormSelect>
+            <div className="button-login">
+              <button className="login" type="submit">Güncelle</button>
+            </div>
+          </Form>
+        </Formik>
       </Modal>
+      <ToastContainer></ToastContainer>
     </>
   )
 }

@@ -5,9 +5,9 @@ import ColorService from "../../../../services/colorService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
 import Modal from '../../../../components/modal/modal'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 
-function AddedColor({open,onClose}) {
+function AddedColor({open,onClose,getAll}) {
     const initialValues = {
         name: ""
     }
@@ -23,6 +23,7 @@ function AddedColor({open,onClose}) {
             toast.success(values.name + "renk eklendi!",{
                 position: toast.POSITION.BOTTOM_RIGHT
             });
+            getAll();
             onClose();
         }).catch((error) => {
             toast.error(error.response.data.message,{
@@ -42,11 +43,14 @@ function AddedColor({open,onClose}) {
                     >
                         <Form>
                             <FormInput label="Ad" type="text" name="name" />
-                            <button className='add' type='submit'>Ekle</button>
+                            <div className="button-login">
+                              <button className="login" type="submit">Ekle</button>
+                            </div>
                         </Form>
 
                     </Formik>
                </Modal>
+               <ToastContainer></ToastContainer>
         </>
     )
 }

@@ -4,9 +4,9 @@ import { Form, Formik } from "formik"
 import FuelService from '../../../../services/fuelService';
 import FormInput from '../../../../components/formElements/formInput';
 import "../../../admin/styles.css"
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import Modal from '../../../../components/modal/modal';
-function UpdateFuel({open,onClose,item}) {
+function UpdateFuel({open,onClose,item,getAll}) {
    
 
     const initialValues = {
@@ -25,6 +25,7 @@ function UpdateFuel({open,onClose,item}) {
             toast.success(values.name + " yakıtı güncellendi!",{
                 position:toast.POSITION.BOTTOM_RIGHT
             });
+            getAll();
             onClose();
         }).catch((error) => {
             toast.success(error.response.data.message,{
@@ -44,10 +45,13 @@ function UpdateFuel({open,onClose,item}) {
                     >
                         <Form>
                             <FormInput type="text" name='name' label="Ad" />
-                            <button className='update' type='submit'>Güncelle</button>
+                             <div className="button-login">
+                              <button className="login" type="submit">Güncelle</button>
+                            </div>
                         </Form>
                     </Formik>
          </Modal>
+         <ToastContainer></ToastContainer>
         </>
     )
 }

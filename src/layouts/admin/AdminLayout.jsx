@@ -1,11 +1,16 @@
 import React from 'react'
 import Sidebar from '../../components/sidebar/sidebar'
+import { useSelector } from 'react-redux';
 
 function AdminLayout({ children }) {
+  const { authItem } = useSelector((state) => state.auth);
+
   return (
+    <>
+    {
     <div className='admin-content'>
       <div className='admin-sidebar'>
-        <Sidebar></Sidebar>
+        <Sidebar user={authItem[0].user.email}></Sidebar>
       </div>
       <div className='section'>
         <div className='container grid'>
@@ -13,6 +18,8 @@ function AdminLayout({ children }) {
         </div>
       </div>
     </div>
+    }
+    </>
   )
 }
 

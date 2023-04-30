@@ -3,7 +3,7 @@ import ColorService from '../../../../services/colorService';
 import AddedColor from '../add/addedColor';
 import UpdateColor from '../update/updateColor';
 import AdminLayout from '../../../../layouts/admin/AdminLayout';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 function GetAllColor() {
   const [colors, setColors] = useState([]);
   const [openAddModal, setopenAddModal] = useState(false);
@@ -74,15 +74,20 @@ function GetAllColor() {
 
       <AddedColor 
         open={openAddModal}
-        onClose={() => setopenAddModal(false)}>  
+        onClose={() => setopenAddModal(false)}
+       getAll={()=>getAll()}
+      >  
       </AddedColor>
 
       {openUpdateModal && <UpdateColor
         open={openUpdateModal}
         onClose={() => setopenUpdateModal(false)}
         item={selectItem}
+        getAll={()=>getAll()}
         >
       </UpdateColor>}
+
+      <ToastContainer></ToastContainer>
     </>
   )
 }

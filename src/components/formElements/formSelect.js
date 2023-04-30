@@ -25,12 +25,15 @@ export default function FormSelect({
         {label}
       </div>
       <Select
+      
         className="form__input"
           options={options}
           placeholder={label + " seçiniz"}
           value={selectedOptions}
           onChange={setField}
           isSearchable={true}
+          menuPortalTarget={document.body}
+          menuPosition={'fixed'}  
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
@@ -40,7 +43,10 @@ export default function FormSelect({
               boxShadow:state.isFocused ? 0 :0,
               paddingTop: 0,
               paddingBottom: 0,
-           
+              "&:focus": {
+                // Overwrittes the different states of border
+                zIndex: 9999 ,
+              }
             }),
           }}
         />

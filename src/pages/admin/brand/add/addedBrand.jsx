@@ -6,9 +6,10 @@ import FormInput from "../../../../components/formElements/formInput"
 import "../styles.css"
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../../../components/modal/modal.jsx'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function AddedBrand({ open, onClose }) {
+function AddedBrand({ open, onClose,getAll }) {
    
     const initialValues = {
         name: ""
@@ -24,7 +25,9 @@ function AddedBrand({ open, onClose }) {
         }).then((e) => {
             toast.success(values.name + 'markası kaydedildi  !', {
                 position: toast.POSITION.BOTTOM_RIGHT,
+                
             });
+            getAll();
             onClose();
         }).catch((error) => {
             toast.error(error.response.data.message, {
@@ -50,6 +53,7 @@ function AddedBrand({ open, onClose }) {
                         </Form>
                     </Formik>
                     </Modal>
+                    <ToastContainer />
         </>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TransmissionService from "../../../../services/transmissionService"
 import UpdateTransmission from "../update/updateTransmission"
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import AddedTransmission from '../add/addedTransmission';
 import AdminLayout from "../../../../layouts/admin/AdminLayout"
 
@@ -76,15 +76,18 @@ function GetAllTransmission() {
             <AddedTransmission
                 open={OpenAddModal}
                 onClose={() => setOpenAddModal(false)}
+                getAll={()=>getAll()}
             ></AddedTransmission>
 
             {OpenUpdateModal && <UpdateTransmission
                 open={OpenUpdateModal}
                 onClsoe={() => setOpenUpdateModal(false)}
                 item={SelectItem}
+                getAll={()=>getAll()}
             >
 
             </UpdateTransmission>}
+            <ToastContainer></ToastContainer>
         </>
     )
 }

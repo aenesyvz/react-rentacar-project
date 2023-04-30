@@ -14,7 +14,7 @@
     font-weight: bold;
     text-transform: capitalize;
     position: absolute;
-    z-index: 100;
+    z-index: 1;
     left: 1rem;
     top: -.5rem;
     text-align: left;
@@ -77,4 +77,13 @@ select{
     outline: none;
     position: absolute;
     right: 5px;
+}
+
+
+.z-select{
+    background-color: white;
+   
+    margin-bottom: -20rem;
+    z-index: 1000000000000000;
+    
 }

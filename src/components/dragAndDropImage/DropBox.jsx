@@ -42,6 +42,7 @@ function DropBox({ onDrop }) {
 
 	const handleFile = (e) => {
 		setImageSent(e.target.files[0]);
+		console.log(e.target.files[0]);
 	  };
 
 	const {
@@ -60,9 +61,7 @@ function DropBox({ onDrop }) {
 	});
 
 	const lists = acceptedFiles.map((list) => (
-		<li key={list.path}>
-			{list.path} - {list.size} bytes
-		</li>
+		console.log("")
 	));
 	return (
 		<>

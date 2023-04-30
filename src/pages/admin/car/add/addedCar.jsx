@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import * as Yup from "yup"
 import { Form, Formik } from "formik"
 import BrandService from "../../../../services/brandService"
@@ -11,13 +11,20 @@ import FormInput from "../../../../components/formElements/formInput"
 import FormSelect from "../../../../components/formElements/formSelect"
 import AdminLayout from '../../../../layouts/admin/AdminLayout'
 import { toast } from 'react-toastify'
+import Dropzone  from '../../../../components/dragAndDropImage/Dropzone'
 import DragAndDrop from '../../../../components/dragAndDropImage/DragAndDrop'
+
+
+
+
+export const CarImageContext = createContext();
 
 function AddedCar() {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [colors, setColors] = useState([]);
   const [fuels, setFuels] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [transmissions, setTransmissions] = useState([]);
 
 
@@ -90,19 +97,25 @@ function AddedCar() {
   const add = async (values) => {
     await new CarService().add({
       ...values
-    }).catch((e)=>{
+    }).then((e)=>{
       toast.success("Araba eklendi",{
-        position:toast.POSITION.BOTTOM_RIGHT
+        position:toast.POSITION.BOTTOM_RIGHT,
+        
       })
     }).catch((error)=>{
       toast.error(error.response.data.message,{
         position:toast.POSITION.BOTTOM_RIGHT
       })
-    })
+    });
+    selectedFiles.forEach(element => {
+      
+      console.log(URL.createObjectURL(element));
+    });
   }
 
   return (
     <AdminLayout>
+      
       <div className="content-header">
         <i className='bx bx-menu header-icon' ></i>
         <span className="header-title">Araba Ekle</span>
@@ -164,10 +177,14 @@ function AddedCar() {
             <FormInput label="Tork" name="torque" type="text"></FormInput>
             <FormInput label="Minimum Findeks Oranı" name="minFindeksCreditRate" type="text"></FormInput>
           </div>
-          <DragAndDrop></DragAndDrop>
+          <CarImageContext.Provider value={{selectedFiles, setSelectedFiles}}>
+             <Dropzone />
+          </CarImageContext.Provider>
+        
           <button className="add" type="submit">Ekle</button>
         </Form>
       </Formik>
+     
     </AdminLayout>
 
   )

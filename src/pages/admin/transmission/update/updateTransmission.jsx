@@ -5,8 +5,9 @@ import TransmissionService from "../../../../services/transmissionService"
 import FormInput from "../../../../components/formElements/formInput"
 import "../../../admin/styles.css"
 import Modal from '../../../../components/modal/modal'
+import { toast } from 'react-toastify'
 
-function UpdateTransmission({ open, onClsoe, item }) {
+function UpdateTransmission({ open, onClsoe, item ,getAll}) {
     const initialValues = {
         id: item.id,
         name: item.name
@@ -17,9 +18,19 @@ function UpdateTransmission({ open, onClsoe, item }) {
     });
 
     const update = async (values) => {
-        await TransmissionService.update({
+        await new TransmissionService().update({
             ...values
-        });
+        }).then((e)=>{
+            toast.success("Vites güncellendi!",{
+                position:toast.POSITION.BOTTOM_RIGHT
+            })
+            getAll();
+            onClsoe();
+        }).catch((error)=>{
+            toast.error(error.response.data.message,{
+                position:toast.POSITION.BOTTOM_RIGHT
+            })
+        })
     }
     return (
         <>
@@ -32,7 +43,9 @@ function UpdateTransmission({ open, onClsoe, item }) {
                 >
                     <Form>
                         <FormInput type="text" name='name' />
-                        <button className='update' type='submit'>Güncelle</button>
+                        <div className="button-login">
+                            <button className="login" type="submit">Ekle</button>
+                        </div>
                     </Form>
                 </Formik>
             </Modal>

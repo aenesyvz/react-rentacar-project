@@ -13,4 +13,8 @@ export default class UserService{
         return axios.put(this.url + "/resetPassword",{email,newPassword,reNewPassword});
     }
 
+    login({email,password}){
+        return axios.post(this.url + "/login",{email,password});
+    }
+
 }

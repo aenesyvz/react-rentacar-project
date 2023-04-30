@@ -24,11 +24,14 @@ function GetListBrand() {
 
   const deleteItem = async (id) => {
     await new BrandService().delete(id).then((e) => {
-      toast.success("Marka silindi!");
+      toast.success("Marka silindi", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+    });
+      getAll();
     }).catch((error) => {
       toast.error(error.response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
+        position: toast.POSITION.BOTTOM_RIGHT,
+    });
     })
   }
 
@@ -80,12 +83,14 @@ function GetListBrand() {
       <AddedBrand
         open={openAddModal}
         onClose={() => setopenAddModal(false)}
+        getAll={() => getAll()}
       ></AddedBrand>
 
       {openUpdateModal && <UpdatedBrand
         open={openUpdateModal}
         onClose={() => setopenUpdateModal(false)}
         item={selectItem}
+        getAll={() => getAll()}
       ></UpdatedBrand>}
     </>
   )

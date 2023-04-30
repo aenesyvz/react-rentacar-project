@@ -23,7 +23,7 @@ export default function DragAndDrop() {
 
 	return (
 		<div className="drap__drop__container">
-			<DropBox onDrop={onDrop} />
+			<DropBox  onDrop={onDrop} />
 			<ShowImage images={images} />
 		</div>
 	);

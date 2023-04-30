@@ -13,7 +13,7 @@ export default class BrandService{
     }
 
     delete(id){
-        return axios.delete(this.url + "/delete",{params:{id}});
+        return axios.delete(this.url + "/delete/"+ id);
     }
 
     getAll(){
