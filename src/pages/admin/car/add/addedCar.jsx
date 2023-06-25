@@ -12,7 +12,7 @@ import FormSelect from "../../../../components/formElements/formSelect"
 import AdminLayout from '../../../../layouts/admin/AdminLayout'
 import { toast } from 'react-toastify'
 import Dropzone  from '../../../../components/dragAndDropImage/Dropzone'
-import DragAndDrop from '../../../../components/dragAndDropImage/DragAndDrop'
+import CarImageService from '../../../../services/carImageService'
 
 
 
@@ -95,22 +95,24 @@ function AddedCar() {
   })
 
   const add = async (values) => {
-    await new CarService().add({
-      ...values
-    }).then((e)=>{
-      toast.success("Araba eklendi",{
-        position:toast.POSITION.BOTTOM_RIGHT,
-        
-      })
-    }).catch((error)=>{
-      toast.error(error.response.data.message,{
-        position:toast.POSITION.BOTTOM_RIGHT
-      })
-    });
-    selectedFiles.forEach(element => {
-      
-      console.log(URL.createObjectURL(element));
-    });
+    console.log({...values});
+    try {
+      const response = await new CarService().add({ ...values });
+      const carId = response.data.data.id;
+  
+      for (const element of selectedFiles) {
+        await new CarImageService().add(carId, element);
+      }
+  
+      toast.success("Araba eklendi", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+   
   }
 
   return (

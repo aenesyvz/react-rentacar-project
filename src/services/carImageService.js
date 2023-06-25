@@ -9,7 +9,7 @@ export default class CarImageService{
         data.append("file",file);
         return axios.post(this.url + "/add",data,{
             headers:{"Content-Type":"multipart/form-data"},
-            params:{id},
+            params:{carId},
         })
     }
 

@@ -2,14 +2,14 @@ import axios from "axios";
 import "../environment.js"
 
 export default class RentalBranchService{
-    url = API_URL + "/rentalBranchs";
+    url = API_URL + "/rentalBranch";
 
-    add({cityId,name,address}){
-        return axios.post(this.url + "/add",{cityId,name,address});
+    add({cityId,districtId,name,address,phoneNumber,email}){
+        return axios.post(this.url + "/add",{cityId,districtId,name,address,phoneNumber,email});
     }
 
-    update({id,cityId,name,address}){
-        return axios.put(this.url + "/update",{id,cityId,name,address});
+    update({id,cityId,districtId,name,address,phoneNumber,email}){
+        return axios.put(this.url + "/update",{id,cityId,districtId,name,address,phoneNumber,email});
     }
 
     delete(id){

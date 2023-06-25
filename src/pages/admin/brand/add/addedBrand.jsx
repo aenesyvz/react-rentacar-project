@@ -9,8 +9,8 @@ import Modal from '../../../../components/modal/modal.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function AddedBrand({ open, onClose,getAll }) {
-   
+function AddedBrand({ open, onClose, getAll }) {
+
     const initialValues = {
         name: ""
     }
@@ -25,7 +25,7 @@ function AddedBrand({ open, onClose,getAll }) {
         }).then((e) => {
             toast.success(values.name + 'markası kaydedildi  !', {
                 position: toast.POSITION.BOTTOM_RIGHT,
-                
+
             });
             getAll();
             onClose();
@@ -37,23 +37,23 @@ function AddedBrand({ open, onClose,getAll }) {
     }
 
     return (
-       <>
-                <Modal open={open} onClose={onClose}>
-                     <h2 className="modal-title">Marka Ekle</h2>
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={schema}
-                        onSubmit={(values) => add(values)}
-                    >
-                        <Form>
-                            <FormInput label="Ad" type="text" name='name' />
-                            <div className="button-login">
-                              <button className="login" type="submit">Ekle</button>
-                            </div>
-                        </Form>
-                    </Formik>
-                    </Modal>
-                    <ToastContainer />
+        <>
+            <Modal open={open} onClose={onClose}>
+                <h2 className="modal-title">Marka Ekle</h2>
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={schema}
+                    onSubmit={(values) => add(values)}
+                >
+                    <Form>
+                        <FormInput label="Ad" type="text" name='name' />
+                        <div className="button-login">
+                            <button className="login" type="submit">Ekle</button>
+                        </div>
+                    </Form>
+                </Formik>
+            </Modal>
+            <ToastContainer />
         </>
     )
 }

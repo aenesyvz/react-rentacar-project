@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import "./styles.css"
 import { CarImageContext } from '../../pages/admin/car/add/addedCar';
 import AssetModal from '../modal/assetModal';
@@ -9,7 +9,7 @@ const Dropzone = () => {
     const [unsupportedFiles, setUnsupportedFiles] = useState([]);
     const fileInputRef = useRef();
     const { selectedFiles, setSelectedFiles } = useContext(CarImageContext);
-    const [url, setUrl] = useState(null);
+    //const [url, setUrl] = useState(null);
     const [selectImage,setSelectImage] = useState(null);
 
     const handleModal = (item) => {
@@ -125,14 +125,14 @@ const Dropzone = () => {
                 {
                     selectedFiles.map((data, i) =>
 
-                        <div  className='drag__img' >
+                        <div  className='drag__img' key={i} >
                       
                                 {<img key={i} src={URL.createObjectURL(data)} />}
 
                                 <div className="img__wrapper">
                                  <div className="operation">
-                                      <i class='bx bx-trash icon' onClick={()=>removeFile(data.name)}></i>
-                                <i class='bx bx-image icon' onClick={()=>handleModal(data)}></i>
+                                      <i className='bx bx-trash icon' onClick={()=>removeFile(data.name)}></i>
+                                <i className='bx bx-image icon' onClick={()=>handleModal(data)}></i>
                                  </div>
                               
                                 </div>
